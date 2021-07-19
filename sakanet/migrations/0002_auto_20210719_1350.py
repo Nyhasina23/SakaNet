@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Saka_Social_Network', '0001_initial'),
+        ('sakanet', '0001_initial'),
     ]
 
     operations = [

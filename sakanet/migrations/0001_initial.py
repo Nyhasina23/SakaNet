@@ -35,8 +35,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_envoye', models.DateTimeField(auto_now_add=True)),
                 ('contenus', models.CharField(max_length=500)),
-                ('discussion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Saka_Social_Network.discussion')),
-                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Saka_Social_Network.utilisateur')),
+                ('discussion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sakanet.discussion')),
+                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sakanet.utilisateur')),
             ],
         ),
         migrations.CreateModel(
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('liste_invitation', models.IntegerField(null=True)),
-                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Saka_Social_Network.utilisateur')),
+                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sakanet.utilisateur')),
             ],
         ),
     ]

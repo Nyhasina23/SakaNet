@@ -18,9 +18,9 @@ class Discussion(models.Model):
 
 class Message(models.Model):
     date_envoye = models.DateTimeField(auto_now_add=True)
-    contenus = models.CharField(max_length=500)
-    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)    
-    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE)
+    contenus = models.TextField(max_length=500)
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)    
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.contenus
@@ -33,3 +33,6 @@ class Invitation(models.Model):
 class Ami(models.Model):
      liste_amis = models.IntegerField(null=True)
      utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+
+     def __str__(self):
+        return self.utilisateur.name

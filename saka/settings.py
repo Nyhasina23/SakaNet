@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'Saka_Social_Network.apps.SakaSocialNetworkConfig',
+    'sakanet.apps.SakaSocialNetworkConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('saka/', include('Saka_Social_Network.urls')),
+    path('saka/', include('sakanet.urls')),
     path('admin/', admin.site.urls),
 ]

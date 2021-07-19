@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Saka_Social_Network', '0002_auto_20210719_1350'),
+        ('sakanet', '0002_auto_20210719_1350'),
     ]
 
     operations = [
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('liste_amis', models.IntegerField(null=True)),
-                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Saka_Social_Network.utilisateur')),
+                ('utilisateur', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sakanet.utilisateur')),
             ],
         ),
     ]
