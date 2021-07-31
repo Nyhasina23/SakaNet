@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from sakanet.models import *
+from sakanet.forms import *
 
 from django.http import HttpResponse
 # Create your views here.
@@ -24,3 +25,14 @@ def detail(request, message_id):
     users =  " ".join([ user.nom  for user in  message.objects.all() ])
     result = "Le nom = {} , son message est = {} ".format(users , message.contenus )
     return HttpResponse(result)
+
+def register(request):
+    if request.method == 'POST':
+        user_register = UserRegister(request.POST)
+        if  user_register.is_valid():
+            user_register.save()
+            return redirect('register')
+            
+    else:
+        user_register = UserRegister()
+    return render(request,'loginForm.html',{'user_register':user_register})
