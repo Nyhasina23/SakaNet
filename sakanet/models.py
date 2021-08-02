@@ -3,14 +3,10 @@ from django.contrib.auth.models import User
 # Create your models here.
     
 class Utilisateur(models.Model):
-    nom_user = models.CharField(max_length=50,null=True)
-    password = models.CharField(max_length=50,null=True)
-    email = models.EmailField(max_length=50,null=True)
-    nom = models.CharField(max_length=50,null=True)
-    prenom = models.CharField(max_length=50,null=True)
-    
+    user = models.OneToOneField(User,on_delete=models.CASCADE, null=True)
+
     def __str__(self):
-        return self.nom+"  "+self.prenom
+        return self.user.username
 
 
 class Discussion(models.Model):
@@ -27,7 +23,7 @@ class Message(models.Model):
     discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
-        return self.contenus
+        return self.contenus 
 
 
 class Invitation(models.Model):

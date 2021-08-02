@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="% static style.css%">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register Sakanet</title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="form">
@@ -14,10 +15,10 @@
             <form method="POST">
                 {% csrf_token %}
                 {% for field in user_register %}
-                <h3>
+                <h4>
                     {{field.label_tag}} <br>
                     {{field}}
-                </h3>
+                </h4>
                 {% endfor %}
                 <button type="submit">Sign Up</button>
             </form>
