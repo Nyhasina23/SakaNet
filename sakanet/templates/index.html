@@ -7,9 +7,29 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-    <h3>Welcome , {{user.username}}</h3>
-    <a href="logout">Logout</a>
-    {% else %}
+        <h2>Bienvenue sur Sakanet</h2>
+        <h3>Bonjour , {{user.username}}</h3>
+        <a href="logout">Logout</a>
+        {% for m in messages%}
+        <h3 style="color: rgb(25, 139, 231);">{{m.utilisateur}}</h3>
+        <h3>{{m.contenus}}</h3>
+        <p>{{m.date_envoye}}</p>
+        {% endfor%}
+
+        <form action="" method="POST">
+            {% if user.is_authenticated %}
+                {% csrf_token%}
+                
+                {% for field in form %}
+                {{field}}
+                {% endfor%} <br>
+                <button type="submit">Envoyer</button>
+            {% else%}
+                <h3>not logged</h3>
+            {% endif %}
+        </form>
+
+    {% else%}
     <h3>Veuillez vous connecter</h3>
     <a href="login">Login</a>
     <a href="register">Register</a>

@@ -1,6 +1,7 @@
 from django import forms
-from .models import Utilisateur
+# from .models import Utilisateur
 from .models import User
+from .models import Message
 from django.contrib.auth.forms import UserCreationForm 
 
 class UserRegister(UserCreationForm):
@@ -20,3 +21,8 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username","password"]
+
+class MessagesForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ["contenus","utilisateur"]

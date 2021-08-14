@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User 
 # Create your models here.
     
-class Utilisateur(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE, null=True)
+# class Utilisateur(models.Model):
+#     user = models.OneToOneField(User,on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
-        return self.user.username
+#     def __str__(self):
+#         return self.user.username
 
 
 class Discussion(models.Model):
@@ -19,7 +19,7 @@ class Discussion(models.Model):
 class Message(models.Model):
     date_envoye = models.DateTimeField(auto_now_add=True)
     contenus = models.TextField(max_length=500)
-    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)    
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, null=True,)    
     discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
@@ -28,8 +28,8 @@ class Message(models.Model):
 
 class Invitation(models.Model):
     liste_invitation = models.IntegerField(null=True)
-    utilisateur = models.ForeignKey(Utilisateur , on_delete=models.CASCADE)
+    utilisateur = models.ForeignKey(User , on_delete=models.CASCADE)
 
 class Ami(models.Model):
      liste_amis = models.IntegerField(null=True)
-     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE)

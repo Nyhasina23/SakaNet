@@ -7,6 +7,6 @@ urlpatterns = [
     path('login', views.user_login, name="user_login"),
     path('register', views.register, name="register"),
     path('detail/<message_id>', views.detail, name="detail"),
-    path('message', views.listMessage, name="listMessage"),
+    path('message', views.message, name="message"),
     path('', views.index, name="index"),
 ]

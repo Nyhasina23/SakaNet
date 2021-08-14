@@ -9,15 +9,26 @@ from django.http import HttpResponse
 # Create your views here.
         
 def index(request):
-    return render(request,'index.html')
+    if request.method == 'POST':
+        message = None
+        form = None
+        form = MessagesForm(request.POST or None)
+        if form.is_valid() :
+            form.save()
+            return redirect('index')
+    else:
+        form = MessagesForm()
+    
+    message = Message.objects.order_by('-date_envoye')[:3]
+    return render(request,'index.html',{'messages':message,'form':form})
 
-def listMessage(request):
-    message = Message.objects.filter()
-    formated_message =  ["<h1>Nom du discussion : {} </h1> <br><br><li> Nom = {} <br> Message = {} </li>".format(mes.discussion 
-    ,mes.utilisateur ,mes.contenus ) for mes in message  ] 
-    messages = ["<ul>{}</ul>".format("\n".join(formated_message))  ]
-    return HttpResponse(messages)
-    # disc = Discussion.objects.all()
+# def listMessage(request):
+    # message = Message.objects.filter()
+    # formated_message =  ["<h1>Nom du discussion : {} </h1> <br><br><li> Nom = {} <br> Message = {} </li>".format(mes.discussion 
+    # ,mes.utilisateur ,mes.contenus ) for mes in message  ] 
+    # messages = ["<ul>{}</ul>".format("\n".join(formated_message))  ]
+    # return HttpResponse(messages)
+    # # disc = Discussion.objects.all()
     # disValue =[ " contenus = {} ".format( discs.nom_discussion for discs in disc   )]
     # return HttpResponse(disc)
 
@@ -28,6 +39,22 @@ def detail(request, message_id):
     result = "Le nom = {} , son message est = {} ".format(users , message.contenus )
     return HttpResponse(result)
 
+def message(request):
+    if request.method == 'POST':
+        form = MessagesForm(request.POST or None)
+        # userlogForm = MessagesForm(request.POST , instance=request.user)
+        if form.is_valid() :
+            form.save()
+            # userlogForm = Message.objects.get(user=request.user)
+            # userlogForm = request.user.userlogForm
+            # userlogForm.utilisateur = "None"
+            # userlogForm.save()
+            
+            return redirect('index')
+    else:
+        form = MessagesForm()
+    return render(request , 'index.html',{'form' : form}) 
+
 def register(request):
     if request.method == 'POST':
         user_register = UserRegister(request.POST)
@@ -37,7 +64,7 @@ def register(request):
             messages.success(request, "Registration successful")
             return redirect('index')
         messages.error(request, "Registration failed")
-            
+        return redirect('register')    
     else:
         user_register = UserRegister()
     return render(request,'register.html',{'user_register':user_register})
