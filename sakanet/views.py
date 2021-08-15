@@ -5,19 +5,23 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
-# from django.utils.datastructures import MultiValueDictKeyError
-# Create your views here.
         
 def index(request):
+    message = None
+    form = None
     if request.method == 'POST':
-        message = None
-        form = None
-        form = MessagesForm(request.POST or None)
-        if form.is_valid() :
-            form.save()
-            return redirect('index')
-    else:
-        form = MessagesForm()
+        if request.user.is_authenticated:
+            form = MessagesForm(request.POST)
+
+            if form.is_valid():
+                obj = form.save(commit=False) # Return an object without saving to the DB
+                obj.utilisateur = User.objects.get(pk=request.user.id) # Add an author field which will contain current user's id
+                obj.save() # Save the final "real form" to the DB
+            else:
+                print("ERROR : Form is invalid")
+                print(form.errors)
+    form = MessagesForm()
+            #     print("ERROR")
     
     message = Message.objects.order_by('-date_envoye')[:3]
     return render(request,'index.html',{'messages':message,'form':form})

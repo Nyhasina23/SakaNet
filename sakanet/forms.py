@@ -1,4 +1,10 @@
 from django import forms
+from django.forms import (
+    Form,
+    ModelForm,
+    ModelChoiceField,
+    CharField,
+)
 # from .models import Utilisateur
 from .models import User
 from .models import Message
@@ -22,7 +28,7 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ["username","password"]
 
-class MessagesForm(forms.ModelForm):
+class MessagesForm(ModelForm):
     class Meta:
         model = Message
-        fields = ["contenus","utilisateur"]
+        fields = ["contenus"]

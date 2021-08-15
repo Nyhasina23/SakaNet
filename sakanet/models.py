@@ -19,7 +19,7 @@ class Discussion(models.Model):
 class Message(models.Model):
     date_envoye = models.DateTimeField(auto_now_add=True)
     contenus = models.TextField(max_length=500)
-    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, null=True,)    
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    
     discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
     
     def __str__(self):

@@ -17,16 +17,12 @@
         {% endfor%}
 
         <form action="" method="POST">
-            {% if user.is_authenticated %}
                 {% csrf_token%}
                 
                 {% for field in form %}
                 {{field}}
                 {% endfor%} <br>
                 <button type="submit">Envoyer</button>
-            {% else%}
-                <h3>not logged</h3>
-            {% endif %}
         </form>
 
     {% else%}
