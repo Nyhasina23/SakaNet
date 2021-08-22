@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Publication</title>
+</head>
+<body>
+    <div class="container">
+        <div class="leftSection">
+            <div class="NavBar">
+                <h2>Sakanet</h2>
+                <a href="logout" class="logout">Logout</a>
+            </div>
+            {% if user.is_authenticated %}
+            <form action="" method="POST">
+                    {% csrf_token %}
+                    <h2>Bonjour {{user.username}}</h2>
+                    <h2 class="title_text">A quoi pensez-vous? </h2>
+                    {% for fields in form_field %}
+                    {{fields}}
+                    {% endfor%} <br>
+                    <button class="btnPrimary" type="submit" >Publier</button>
+                    {% for pub in publication %}
+                    <div class="pub_container">
+                        <h3 class="pub"  style="color: rgb(25, 139, 231);"><a href="{% url 'discussion' pub.utilisateur.id %}">{{pub.utilisateur}}</a></h3>
+                        <h3 class="pub" >{{pub.contenus_pub}}</h3>
+                        <p class="date_envoye">Publié le {{pub.date_envoye}}</p>
+                    </div>
+                    {% endfor%}
+                </form>
+            {% else%}
+            <h3>Veuillez vous connecter</h3>
+            <a href="login">Login</a>
+            <a href="register">Register</a>
+            {% endif %}
+        </div>
+        <div class="rightSection">
+            <h3 class="user_title">Utilisateurs</h3>
+            {% for user_name in users%}
+            <li class="user_list">{{user_name.username}}</li>
+            {% endfor %}
+        </div>
+    </div>
+    
+</body>
+</html>

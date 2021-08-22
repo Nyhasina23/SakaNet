@@ -1,0 +1,84 @@
+*{
+    font-family: Poppins;
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(237, 245, 245);
+    column-count: 2;
+    width: 90%;
+
+
+}
+.rightSection{
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10%;
+    background: white;
+    padding: 25px;
+    text-decoration: none;
+    list-style-type: none;
+}
+.rightSection > li{
+    margin-bottom: 15px;
+}
+.rightSection .user_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input{
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.NavBar{
+    background: rgb(10, 218, 183);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /* float: left; */
+}
+.pub_container{
+    background-color: #fff;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.title_text{
+    font-weight: 500;
+}
+.btnPrimary{
+    background: rgb(10, 218, 183);
+    color: cornsilk;
+
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+
+}
+h2 + a{
+    position: relative;
+    text-decoration: none;
+    color: cornsilk;
+    margin-left: auto;
+}
+
+h2{
+    font-size: 15px;
+}
+.pub{
+    font-size: 12px;
+}
+.date_envoye{
+    font-size: 10px;
+    color: darkgray;
+}
+.text_title{
+    font-size: 15px;
+    font-weight: normal;
+}

@@ -8,6 +8,7 @@ from django.forms import (
 # from .models import Utilisateur
 from .models import User
 from .models import Message
+from .models import Publication
 from django.contrib.auth.forms import UserCreationForm 
 
 class UserRegister(UserCreationForm):
@@ -32,3 +33,8 @@ class MessagesForm(ModelForm):
     class Meta:
         model = Message
         fields = ["contenus"]
+
+class PubForm(ModelForm):
+    class Meta:
+        model = Publication
+        fields = ["contenus_pub"]

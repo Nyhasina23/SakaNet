@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from sakanet.models import *
 from sakanet.forms import *
 from django.contrib import messages
@@ -12,7 +12,6 @@ def index(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = MessagesForm(request.POST)
-
             if form.is_valid():
                 obj = form.save(commit=False) # Return an object without saving to the DB
                 obj.utilisateur = User.objects.get(pk=request.user.id) # Add an author field which will contain current user's id
@@ -25,6 +24,43 @@ def index(request):
     
     message = Message.objects.order_by('-date_envoye')[:3]
     return render(request,'index.html',{'messages':message,'form':form})
+
+def discussion(request,id):
+    user_profile = None
+    form = None
+    message = None
+    user_profile = get_object_or_404(User, id=id)
+    form = MessagesForm(request.POST)
+    if form.is_valid():
+        obj = form.save(commit=False) # Return an object without saving to the DB
+        obj.utilisateur = User.objects.get(pk=request.user.id) # Add an author field which will contain current user's id
+        obj.save() # Save the final "real form" to the DB
+    else:
+        print("ERROR : Form is invalid")
+        print(form.errors)
+    message = Message.objects.order_by('-date_envoye')[:3]
+    return render(request, 'discussion.html', {'user_profile':user_profile,'form':form,'message':message})
+
+def publication(request):
+    contenus_pub = None
+    forms = None
+    users = None
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            forms = PubForm(request.POST)
+            if forms.is_valid():
+                obj = forms.save(commit=False) # Return an object without saving to the DB
+                obj.utilisateur = User.objects.get(pk=request.user.id) # Add an user field which will contain current user's id
+                obj.save() # Save the final "real form" to the DB
+            else:
+                print("ERROR : Form is invalid")
+                print(forms.errors)
+            #     print("ERROR")
+    
+    forms = PubForm()
+    pub = Publication.objects.order_by('-date_envoye')[:3]
+    users = User.objects.filter()
+    return render(request,'publication.html',{'publication':pub,'form_field':forms,'users':users})
 
 # def listMessage(request):
     # message = Message.objects.filter()
@@ -83,7 +119,7 @@ def user_login(request):
             if user is not None:
                 login(request,user)
                 messages.info(request, f"You are logged in {username}")
-                return redirect('index')
+                return redirect('publication')
             else:
                 messages.error(request, 'Invalid login')
         else:
