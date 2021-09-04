@@ -11,20 +11,11 @@
     
     <h1>Bienvenue dans votre Discussion</h1>
     <h4>Bonjour , {{user.username}}</h4><br>
-
-    <h3>{{user_profile.username}}</h3>
     <form action="" method="POST">
         {% csrf_token%}
-        {% for m in message%}
-        <h3 style="color: rgb(25, 139, 231);">{{m.utilisateur}}</h3>
-        <h3>{{m.contenus}}</h3>
-        <p>{{m.date_envoye}}</p>
-        {% endfor%}
-        
-        {% for field in form %}
-        {{field}}
-        {% endfor%} <br>
-        <button type="submit">Envoyer</button>
+
+        <h3>Profil de {{user_profile.username}}</h3>
+        <button type="submit">Envoyer un message</button>
     </form>
 
     {% else%}
