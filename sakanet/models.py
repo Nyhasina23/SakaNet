@@ -21,21 +21,21 @@ class Publication(models.Model):
             return self.contenus_pub
 
 class Discussion(models.Model):
-    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    
     nom_discussion = models.CharField(max_length=50 , null=True)
-    liste_message= models.IntegerField(null=True)
 
     def __str__(self):
         return self.nom_discussion
 
 class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE,related_name="sent_messages",null=True)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name="received_messages",null=True)
+    message = models.CharField(max_length=150)
     date_envoye = models.DateTimeField(auto_now_add=True)
-    contenus = models.CharField(max_length=150)
-    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    
-    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
-    
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE,null=True)
+    seen = models.BooleanField(default=False)
+
     def __str__(self):
-        return self.contenus 
+        return self.message 
 
 
 class Invitation(models.Model):

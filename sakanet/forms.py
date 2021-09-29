@@ -32,7 +32,7 @@ class LoginForm(forms.ModelForm):
 class MessagesForm(ModelForm):
     class Meta:
         model = Message
-        fields = ["contenus"]
+        fields = ["message"]
 
 class PubForm(ModelForm):
     class Meta:

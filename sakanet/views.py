@@ -5,7 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
-        
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+import json
+from django.http.response import JsonResponse
 def index(request):
     message = None
     form = None
@@ -25,21 +28,57 @@ def index(request):
     message = Message.objects.order_by('-date_envoye')[:3]
     return render(request,'index.html',{'messages':message,'form':form})
 
-def discussion(request,id):
+def profil(request,id):
     user_profile = None
     form = None
     message = None
     user_profile = get_object_or_404(User, id=id)
     form = MessagesForm(request.POST)
-    if form.is_valid():
-        obj = form.save(commit=False) # Return an object without saving to the DB
-        obj.utilisateur = User.objects.get(pk=request.user.id) # Add an author field which will contain current user's id
-        obj.save() # Save the final "real form" to the DB
-    else:
-        print("ERROR : Form is invalid")
-        print(form.errors)
+    if request.method == 'POST':
+        if form.is_valid():
+            obj = form.save(commit=False) # Return an object without saving to the DB
+            obj.utilisateur = User.objects.get(pk=request.user.id) # Add an author field which will contain current user's id
+            obj.save() # Save the final "real form" to the DB
+        else:
+            print("ERROR : Form is invalid")
+            print(form.errors)
     message = Message.objects.order_by('-date_envoye')[:3]
-    return render(request, 'discussion.html', {'user_profile':user_profile,'form':form,'message':message})
+    return render(request, 'profil.html', {'user_profile':user_profile,'form':form,'message':message})
+
+@login_required
+def discussion(request,pk):
+    other_user = get_object_or_404(User,pk=pk)
+    messages = Message.objects.filter(
+        Q(receiver=request.user,sender=other_user)
+    )
+    messages.update(seen=True)
+    messages = messages | Message.objects.filter(Q(receiver=other_user,sender=request.user))
+    return render(request, 'discussion.html',{"other_user":other_user, "messages":messages})
+
+@login_required
+def ajax_load_messages(request,id):
+    other_user = get_object_or_404(User,id=id)
+    messages = Message.objects.filter(seen=False).filter(
+        Q(receiver=request.user,sender=other_user)
+    )   
+    message_list = [{
+        "sender": message.sender.username,
+        "message": message.message,
+        "sent" : message.sender == request.user
+    } for message in messages]
+    messages.update(seen=True)
+
+    if request.method == 'POST':
+        message = json.loads(request.body)
+        m = Message.objects.create(receiver=other_user, sender=request.user,message=message)
+        message_list.append({
+            "sender": request.user.username,
+            "message":m.message,
+            "sent":True,
+        })
+    return JsonResponse(message_list, safe=False)
+
+
 
 def publication(request):
     contenus_pub = None
@@ -64,12 +103,12 @@ def publication(request):
 
 # def listMessage(request):
     # message = Message.objects.filter()
-    # formated_message =  ["<h1>Nom du discussion : {} </h1> <br><br><li> Nom = {} <br> Message = {} </li>".format(mes.discussion 
+    # formated_message =  ["<h1>Nom du profil : {} </h1> <br><br><li> Nom = {} <br> Message = {} </li>".format(mes.profil 
     # ,mes.utilisateur ,mes.contenus ) for mes in message  ] 
     # messages = ["<ul>{}</ul>".format("\n".join(formated_message))  ]
     # return HttpResponse(messages)
-    # # disc = Discussion.objects.all()
-    # disValue =[ " contenus = {} ".format( discs.nom_discussion for discs in disc   )]
+    # # disc = profil.objects.all()
+    # disValue =[ " contenus = {} ".format( discs.nom_profil for discs in disc   )]
     # return HttpResponse(disc)
 
 
@@ -79,7 +118,9 @@ def detail(request, message_id):
     result = "Le nom = {} , son message est = {} ".format(users , message.contenus )
     return HttpResponse(result)
 
-def message(request):
+def message(request,id):
+
+    user_profile = get_object_or_404(User, id=id)
     if request.method == 'POST':
         form = MessagesForm(request.POST or None)
         # userlogForm = MessagesForm(request.POST , instance=request.user)
