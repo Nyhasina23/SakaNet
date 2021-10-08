@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakanet</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'TemplateSakanet/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- left content  -->
+        <div class="left-container">
+            <div class="navbar"><a href="login" class="navbar">Sakanet</a></div>
+            <h1 class="title">Welcome to Sakanet</h1>    
+            <p>Sakanet is a social network well-founded in 2021 to make all <br>
+            people in the world connected</p>
+            <div class="button">
+                <a href="login" class="btn">LOGIN</a>
+                <a href="register" class="btn btn-second">REGISTER</a>
+            </div>
+            <p class="footer_text">If you don't have an account, please click <a href="register">register</a></p>
+        </div>
+
+        <!-- right content login form -->
+
+        <div class="right-container">
+            <img  src="{% static 'TemplateSakanet/images/SN.png' %}" alt="" class="logo"/>
+            <h3 class="login_title">Login</h3>
+            <form method="POST" class="form" action="">
+                {% csrf_token %}
+                {% for fields in login_form %}
+                <!-- <h4> -->
+                    <label class="input"> {{fields}}</label>
+                    <!-- <input type="password" name="" id="" placeholder="password..."><label for=""> {{fields}}</label> -->
+                    <!-- </h4> -->
+                    {% endfor %}
+                    <!-- <button class="btn_login" type="submit">Connexion</button> -->
+                    <button  class="btn_login" type="submit">LOGIN</button>
+                </form>
+        </div>
+    </div>
+
+    <script src="{% static 'TemplateSakanet/js/index.js'  %}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'TemplateSakanet/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- left content  -->
+        
+        <div class="left-container">
+            <div class="navbar"><a href="register" class="navbar">Sakanet</a></div>
+            <h1 class="title">Welcome to Sakanet</h1>    
+            <p>Sakanet is a social network well-founded in 2021 to make all <br>
+            people in the world connected</p>
+            <div class="button">
+                <a href="login" class="btn">LOGIN</a>
+                <a href="register" class="btn btn-second">REGISTER</a>
+            </div>
+            <p class="footer_text">If you have an account, please click <a href="login">login</a></p>
+
+        </div>
+
+        <!-- right content login form -->
+
+        <div class="right-container">
+            <!-- <img  src="images/SN.png" alt="" class="logo"/> -->
+            <h3 class="login_title">Please register here</h3>
+            <form class="form" method="POST" action="">
+                {% csrf_token %}
+                {% for field in user_register %}
+                    <!-- {{field.label_tag}} -->
+                    <label class="input"> {{field}}</label>
+                    <!-- <input type="text" name="" id="" placeholder="first name...">
+                    <input type="text" name="" id="" placeholder="last name...">
+                    <input type="text" name="" id="" placeholder="username..">
+                    <input type="text" name="" id="" placeholder="email...">
+                    <input type="password" name="" id="" placeholder="password...">
+                    <input type="password" name="" id="" placeholder="confirm password..."> -->
+                    {% endfor %}
+                <button class="btn_signup" type="submit">SIGN UP</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'TemplateSakanet/js/index2.js'  %}"></script>
+</body>
+
+</html>

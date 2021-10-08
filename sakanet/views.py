@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import json
 from django.http.response import JsonResponse
+from django.template import loader
 def index(request):
     message = None
     form = None
@@ -143,12 +144,12 @@ def register(request):
             user = user_register.save()
             login(request, user)
             messages.success(request, "Registration successful")
-            return redirect('index')
+            return redirect('publication')
         messages.error(request, "Registration failed")
         return redirect('register')    
     else:
         user_register = UserRegister()
-    return render(request,'register.html',{'user_register':user_register})
+    return render(request,'sakanet/register.html',{'user_register':user_register})
 
 def user_login(request):
     if request.method == 'POST':
@@ -166,9 +167,11 @@ def user_login(request):
         else:
                messages.error(request, 'Invalid login')
     form = AuthenticationForm()
-    return render(request, 'login.html',{'login_form':form})
+    # template = loader.get_template('sakanet/sakanet_login.html')
+    # return HttpResponse(template.render({'login_form':form},request=request))
+    return render(request, 'sakanet/login.html',{'login_form':form})
 
 def user_logout(request):
     logout(request)
     messages.info(request,"You have successfully logged out.")
-    return redirect('index')
+    return redirect('user_login')

@@ -1,5 +1,5 @@
-*{
-    font-family: Poppins;
+/* *{
+    font-family: Urbanist;
 }
 .container{
     display: flex;
@@ -7,7 +7,6 @@
     justify-content: center;
     background: rgb(237, 245, 245);
     column-count: 2;
-    width: 90%;
 
 
 }
@@ -37,12 +36,11 @@ input{
 }
 .NavBar{
     background: rgb(10, 218, 183);
-    width: 100%;
     display: flex;
     align-items: center;
     padding: 10px;
     /* float: left; */
-}
+/* }
 .pub_container{
     background-color: #fff;
     padding: 5px;
@@ -55,7 +53,6 @@ input{
 .btnPrimary{
     background: rgb(10, 218, 183);
     color: cornsilk;
-
     border: none;
     padding: 8px;
     border-radius: 5px;
@@ -81,4 +78,4 @@ h2{
 .text_title{
     font-size: 15px;
     font-weight: normal;
-}
+} */ */
